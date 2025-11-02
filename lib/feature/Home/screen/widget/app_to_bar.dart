@@ -3,14 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppToBar extends StatelessWidget implements PreferredSizeWidget {
-  const AppToBar({super.key});
+  final String text;
+  const AppToBar({super.key, required this.text});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: AppColor.appbarBgColor,
       title: Text(
-        "Welcome to Evote",
+        text,
         style: TextStyle(color: AppColor.bgColor, fontSize: 40.r),
       ),
     );

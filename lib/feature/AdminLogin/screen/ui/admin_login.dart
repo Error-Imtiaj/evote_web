@@ -1,27 +1,28 @@
 import 'package:evote_web/app/core/app_button.dart';
 import 'package:evote_web/app/core/app_text_field.dart';
-import 'package:evote_web/feature/AdminLogin/screen/ui/admin_login.dart';
+import 'package:evote_web/feature/AdminLogin/screen/ui/admin_portal.dart';
 import 'package:evote_web/feature/Home/screen/widget/app_to_bar.dart';
 import 'package:evote_web/app/utils/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class AdminLogin extends StatefulWidget {
+  const AdminLogin({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<AdminLogin> createState() => _AdminLoginState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  final TextEditingController nidctrl = TextEditingController();
-  final GlobalKey _fromKey = GlobalKey();
+class _AdminLoginState extends State<AdminLogin> {
+  final TextEditingController emailctrl = TextEditingController();
+  final TextEditingController passctrl = TextEditingController();
+  final GlobalKey _formKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.bgColor,
-      appBar: AppToBar(text: 'Welcome to the E-Voting System'),
+      appBar: AppToBar(text: 'System Administrator Login'),
       body: Center(
         child: Container(
           padding: EdgeInsets.all(24.r),
@@ -36,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
           width: 600.r,
           height: 500.r,
           child: Form(
-            key: _fromKey,
+            key: _formKey,
             child: Column(
               children: [
                 Gap(40.r),
@@ -44,19 +45,24 @@ class _HomeScreenState extends State<HomeScreen> {
                 Gap(40.r),
                 // textfield
                 AppTextField(
-                  textEditingController: nidctrl,
-                  hintText: "Enter Your 9 Digit NID",
+                  textEditingController: emailctrl,
+                  hintText: "Enter Your Email",
                 ),
                 Gap(28.r),
-                AppButton(btnText: "Next"),
+                AppTextField(
+                  textEditingController: passctrl,
+                  hintText: "Enter Your Password",
+                  obsecureText: true,
+                ),
+
                 Spacer(),
                 AppButton(
-                  btnText: "Admin Login",
+                  btnText: "Login",
                   onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) {
-                        return AdminLogin();
+                        return AdminPortal();
                       },
                     ),
                   ),
@@ -72,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget homeTitle() {
     return Text(
-      "Please Enter Your NID",
+      "It's Good To Have You Back!",
       style: TextStyle(
         color: AppColor.bgColor,
         fontSize: 32.r,

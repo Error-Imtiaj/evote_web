@@ -5,19 +5,23 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class AppTextField extends StatelessWidget {
   final TextEditingController textEditingController;
   final String hintText;
+  final bool? obsecureText;
   const AppTextField({
     super.key,
     required this.textEditingController,
     required this.hintText,
+    this.obsecureText,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      obscureText: obsecureText ?? false,
+      obscuringCharacter: '◉',
       controller: textEditingController,
       keyboardType: TextInputType.number,
       style: TextStyle(color: AppColor.bgColor),
-      cursorColor: AppColor.appbarBgColor,
+      cursorColor: AppColor.buttonColor,
       decoration: InputDecoration(
         filled: true,
         fillColor: AppColor.appbarBgColor,
