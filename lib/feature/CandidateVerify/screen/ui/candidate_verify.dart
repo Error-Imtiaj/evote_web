@@ -1,30 +1,33 @@
 import 'package:evote_web/app/core/app_button.dart';
 import 'package:evote_web/app/core/app_text_field.dart';
-import 'package:evote_web/app/utils/app_routes.dart';
-import 'package:evote_web/feature/AdminLogin/screen/ui/admin_login.dart';
 import 'package:evote_web/feature/Home/screen/widget/app_to_bar.dart';
 import 'package:evote_web/app/utils/app_color.dart';
-import 'package:evote_web/feature/Vote/screen/ui/vote.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import 'package:go_router/go_router.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class CandidateVerify extends StatefulWidget {
+  const CandidateVerify({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<CandidateVerify> createState() => _CandidateVerifyState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  final TextEditingController nidctrl = TextEditingController();
+class _CandidateVerifyState extends State<CandidateVerify> {
+  final TextEditingController candCtrl = TextEditingController();
   final GlobalKey _fromKey = GlobalKey();
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    candCtrl.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.bgColor,
-      appBar: AppToBar(text: 'Welcome to the E-Voting System'),
+      appBar: AppToBar(text: 'Enter Your Candiate ID to verify'),
       body: Center(
         child: Container(
           padding: EdgeInsets.all(24.r),
@@ -47,26 +50,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 Gap(40.r),
                 // textfield
                 AppTextField(
-                  textEditingController: nidctrl,
-                  hintText: "Enter Your 9 Digit NID",
+                  textEditingController: candCtrl,
+                  hintText: "Enter Your Candidate ID",
                 ),
                 Gap(28.r),
-                AppButton(
-                  btnText: "Next",
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return Vote();
-                      },
-                    ),
-                  ),
-                ),
+                AppButton(btnText: "Verify"),
                 Spacer(),
-                AppButton(
-                  btnText: "Admin Login",
-                  onTap: () => context.push(AppRoutes.adminRoutePath),
-                ),
                 Gap(28.r),
               ],
             ),
@@ -78,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget homeTitle() {
     return Text(
-      "Please Enter Your NID",
+      "Verify Candidate Details",
       style: TextStyle(
         color: AppColor.bgColor,
         fontSize: 32.r,

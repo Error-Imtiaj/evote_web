@@ -1,18 +1,12 @@
 import 'package:evote_web/app/core/app_button.dart';
 import 'package:evote_web/app/utils/app_color.dart';
-import 'package:evote_web/app/utils/app_routes.dart';
-import 'package:evote_web/feature/CandidateReg/screen/ui/candidate_reg.dart';
-import 'package:evote_web/feature/CandidateVerify/screen/ui/candidate_verify.dart';
 import 'package:evote_web/feature/Home/screen/ui/home_screen.dart';
-import 'package:evote_web/feature/VoterReg/screen/ui/voter_reg.dart';
-import 'package:evote_web/feature/VoterVerify/screen/ui/voter_verify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import 'package:go_router/go_router.dart';
 
-class AdminPortal extends StatelessWidget {
-  const AdminPortal({super.key});
+class Vote extends StatelessWidget {
+  const Vote({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +19,7 @@ class AdminPortal extends StatelessWidget {
           Expanded(
             child: Center(
               child: Text(
-                "Welcome Back \nChief!",
+                "Time to change \nthe world",
                 style: TextStyle(color: AppColor.appbarBgColor, fontSize: 56.r),
               ),
             ),
@@ -56,43 +50,18 @@ class AdminPortal extends StatelessWidget {
                   children: [
                     Gap(64.r),
                     homeTitle(),
-                    Gap(32.r),
-                    AppButton(
-                      btnText: "Voter Register",
-                      onTap: () => context.push(AppRoutes.voterRegRoutPath),
-                    ),
-                    Gap(16.r),
-                    AppButton(
-                      btnText: "Candidate Register",
-                      onTap: () => context.push(AppRoutes.candidateRegRoutPath),
-                    ),
-                    Gap(16.r),
-                    AppButton(
-                      btnText: "Candidate List",
-                      onTap: () =>
-                          context.push(AppRoutes.candidateListRoutePath),
-                    ),
-                    Gap(16.r),
-                    AppButton(
-                      btnText: "Voter List",
-                      onTap: () => context.push(AppRoutes.voterListRoutePath),
-                    ),
-                    Gap(16.r),
-                    AppButton(
-                      btnText: "Candidate Verify",
-                      onTap: () =>
-                          context.push(AppRoutes.candidateVerifyRoutePath),
-                    ),
-                    Gap(16.r),
-                    AppButton(
-                      btnText: "Voter Verify",
-                      onTap: () => context.push(AppRoutes.voterVerifyRoutePath),
-                    ),
                     Spacer(),
                     AppButton(
-                      btnText: "Logout",
+                      btnText: "Vote",
                       onTap: () {
-                        context.go(AppRoutes.initialRoutePath);
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return HomeScreen();
+                            },
+                          ),
+                        );
                       },
                     ),
                   ],
@@ -107,7 +76,7 @@ class AdminPortal extends StatelessWidget {
 
   Widget homeTitle() {
     return Text(
-      "Select Your Operation",
+      "Select Your Candidate",
       style: TextStyle(
         color: AppColor.bgColor,
         fontSize: 32.r,
