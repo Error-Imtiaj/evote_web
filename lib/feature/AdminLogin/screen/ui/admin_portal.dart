@@ -1,11 +1,6 @@
 import 'package:evote_web/app/core/app_button.dart';
 import 'package:evote_web/app/utils/app_color.dart';
 import 'package:evote_web/app/utils/app_routes.dart';
-import 'package:evote_web/feature/CandidateReg/screen/ui/candidate_reg.dart';
-import 'package:evote_web/feature/CandidateVerify/screen/ui/candidate_verify.dart';
-import 'package:evote_web/feature/Home/screen/ui/home_screen.dart';
-import 'package:evote_web/feature/VoterReg/screen/ui/voter_reg.dart';
-import 'package:evote_web/feature/VoterVerify/screen/ui/voter_verify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
