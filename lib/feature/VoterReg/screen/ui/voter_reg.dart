@@ -40,6 +40,7 @@ class _VoterRegState extends State<VoterReg> {
               child: Text(
                 "Register New Voter",
                 style: TextStyle(color: AppColor.appbarBgColor, fontSize: 56.r),
+                textAlign: TextAlign.center,
               ),
             ),
           ),
