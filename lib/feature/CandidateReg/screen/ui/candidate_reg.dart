@@ -17,7 +17,7 @@ class CandidateReg extends StatefulWidget {
 class _CandidateRegState extends State<CandidateReg> {
   final TextEditingController namectrl = TextEditingController();
   final TextEditingController partyctrl = TextEditingController();
-  final GlobalKey _formKey = GlobalKey();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -101,11 +101,27 @@ class _CandidateRegState extends State<CandidateReg> {
                           AppTextField(
                             textEditingController: partyctrl,
                             hintText: "Enter Your Party Name",
+                            valid: (value) {
+                              // Check if empty
+                              if (value == null || value.trim().isEmpty) {
+                                return 'Party Name cannot be empty';
+                              }
+
+                              return null;
+                            },
                           ),
                           Gap(16.r),
                           AppTextField(
                             textEditingController: namectrl,
                             hintText: "Enter Your Name",
+                            valid: (value) {
+                              // Check if empty
+                              if (value == null || value.trim().isEmpty) {
+                                return 'Name cannot be empty';
+                              }
+
+                              return null;
+                            },
                           ),
                           Gap(16.r),
 
@@ -113,12 +129,16 @@ class _CandidateRegState extends State<CandidateReg> {
                           Spacer(),
                           AppButton(
                             btnText: "Register Candidate",
-                            onTap: () => context.read<CandidateRegBloc>().add(
-                              CandidateRegisterEvent(
-                                name: namectrl.text.trim(),
-                                party: partyctrl.text.trim(),
-                              ),
-                            ),
+                            onTap: () {
+                              if (_formKey.currentState!.validate()) {
+                                context.read<CandidateRegBloc>().add(
+                                  CandidateRegisterEvent(
+                                    name: namectrl.text.trim(),
+                                    party: partyctrl.text.trim(),
+                                  ),
+                                );
+                              }
+                            },
                           ),
                         ],
                       ),

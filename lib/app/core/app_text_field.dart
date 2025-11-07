@@ -6,11 +6,12 @@ class AppTextField extends StatelessWidget {
   final TextEditingController textEditingController;
   final String hintText;
   final bool? obsecureText;
+  final String? Function(String?)? valid;
   const AppTextField({
     super.key,
     required this.textEditingController,
     required this.hintText,
-    this.obsecureText,
+    this.obsecureText, this.valid,
   });
 
   @override
@@ -22,6 +23,7 @@ class AppTextField extends StatelessWidget {
       keyboardType: TextInputType.number,
       style: TextStyle(color: AppColor.bgColor),
       cursorColor: AppColor.buttonColor,
+      validator: valid,
       decoration: InputDecoration(
         filled: true,
         fillColor: AppColor.appbarBgColor,

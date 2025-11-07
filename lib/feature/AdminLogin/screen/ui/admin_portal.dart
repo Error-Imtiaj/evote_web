@@ -55,69 +55,21 @@ class AdminPortal extends StatelessWidget {
                     Gap(64.r),
                     homeTitle(),
                     Gap(32.r),
-                    AppButton(
-                      btnText: "Voter Register",
-                      onTap: () => context.push(AppRoutes.voterRegRoutPath),
-                    ),
+                    _voterReg(context),
+
                     Gap(16.r),
-                    AppButton(
-                      btnText: "Candidate Register",
-                      onTap: () => context.push(AppRoutes.candidateRegRoutPath),
-                    ),
+                    _candidateReg(context),
+
                     Gap(16.r),
-                    BlocConsumer<CandidateListBloc, CandidateListState>(
-                      listener: (context, state) {
-                        if (state is CandidateListLoaded) {
-                          context.push(AppRoutes.candidateListRoutePath);
-                        }
-                      },
-                      builder: (context, state) {
-                        if (state is CandidateListLoading) {
-                          return const CircularProgressIndicator();
-                        }
-                        if (state is CandidateListError) {
-                          return Text("Error: ${state.errorMessage}");
-                        }
-                        return AppButton(
-                          btnText: "Candidate List",
-                          onTap: () => context.read<CandidateListBloc>().add(
-                            FetchCandidate(),
-                          ),
-                        );
-                      },
-                    ),
+                    _candidateList(),
                     Gap(16.r),
-                    BlocConsumer<VoterListBloc, VoterListState>(
-                      listener: (context, state) {
-                        if (state is VoterLoaded) {
-                          context.push(AppRoutes.voterListRoutePath);
-                        }
-                      },
-                      builder: (BuildContext context, VoterListState state) {
-                        if (state is VoterLoading) {
-                          return const CircularProgressIndicator();
-                        }
-                        if (state is VoterError) {
-                          return Text("Error: ${state.message}");
-                        }
-                        return AppButton(
-                          btnText: "Voter List",
-                          onTap: () =>
-                              context.read<VoterListBloc>().add(FetchVoters()),
-                        );
-                      },
-                    ),
+                    _voterList(),
                     Gap(16.r),
-                    AppButton(
-                      btnText: "Candidate Verify",
-                      onTap: () =>
-                          context.push(AppRoutes.candidateVerifyRoutePath),
-                    ),
+                    _candidateVerify(context),
+
                     Gap(16.r),
-                    AppButton(
-                      btnText: "Voter Verify",
-                      onTap: () => context.push(AppRoutes.voterVerifyRoutePath),
-                    ),
+                    _voterVerify(context),
+
                     Spacer(),
                     AppButton(
                       btnText: "Logout",
@@ -135,6 +87,85 @@ class AdminPortal extends StatelessWidget {
     );
   }
 
+  // VOTER REG
+  Widget _voterReg(BuildContext context) {
+    return AppButton(
+      btnText: "Voter Register",
+      onTap: () => context.push(AppRoutes.voterRegRoutPath),
+    );
+  }
+
+  // CANDIDATE REG
+  Widget _candidateReg(BuildContext context) {
+    return AppButton(
+      btnText: "Candidate Register",
+      onTap: () => context.push(AppRoutes.candidateRegRoutPath),
+    );
+  }
+
+  // VOTER VERIFY
+  Widget _voterVerify(BuildContext context) {
+    return AppButton(
+      btnText: "Voter Verify",
+      onTap: () => context.push(AppRoutes.voterVerifyRoutePath),
+    );
+  }
+
+  // CANDIDATE VERIFY
+  Widget _candidateVerify(BuildContext context) {
+    return AppButton(
+      btnText: "Candidate Verify",
+      onTap: () => context.push(AppRoutes.candidateVerifyRoutePath),
+    );
+  }
+
+  // VOTER LIST
+  Widget _voterList() {
+    return BlocConsumer<VoterListBloc, VoterListState>(
+      listener: (context, state) {
+        if (state is VoterLoaded) {
+          context.push(AppRoutes.voterListRoutePath);
+        }
+      },
+      builder: (BuildContext context, VoterListState state) {
+        if (state is VoterLoading) {
+          return const CircularProgressIndicator();
+        }
+        if (state is VoterError) {
+          return Text("Error: ${state.message}");
+        }
+        return AppButton(
+          btnText: "Voter List",
+          onTap: () => context.read<VoterListBloc>().add(FetchVoters()),
+        );
+      },
+    );
+  }
+
+  // CANDIDATE LIST
+  Widget _candidateList() {
+    return BlocConsumer<CandidateListBloc, CandidateListState>(
+      listener: (context, state) {
+        if (state is CandidateListLoaded) {
+          context.push(AppRoutes.candidateListRoutePath);
+        }
+      },
+      builder: (context, state) {
+        if (state is CandidateListLoading) {
+          return const CircularProgressIndicator();
+        }
+        if (state is CandidateListError) {
+          return Text("Error: ${state.errorMessage}");
+        }
+        return AppButton(
+          btnText: "Candidate List",
+          onTap: () => context.read<CandidateListBloc>().add(FetchCandidate()),
+        );
+      },
+    );
+  }
+
+  // HOME TITLE
   Widget homeTitle() {
     return Text(
       "Select Your Operation",

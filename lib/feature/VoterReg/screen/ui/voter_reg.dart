@@ -18,7 +18,7 @@ class _VoterRegState extends State<VoterReg> {
   final TextEditingController nidctrl = TextEditingController();
   final TextEditingController namectrl = TextEditingController();
   final TextEditingController birthctrl = TextEditingController();
-  final GlobalKey _formKey = GlobalKey();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -106,28 +106,87 @@ class _VoterRegState extends State<VoterReg> {
                           AppTextField(
                             textEditingController: nidctrl,
                             hintText: "Enter Your NID",
+                            valid: (value) {
+                              // Check if empty
+                              if (value == null || value.trim().isEmpty) {
+                                return 'NID cannot be empty';
+                              }
+                              if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
+                                return 'NID must contain only numbers';
+                              }
+
+                              if (value.length < 10) {
+                                return 'NID must be at least 10 digits long';
+                              }
+
+                              return null;
+                            },
                           ),
                           Gap(16.r),
                           AppTextField(
                             textEditingController: namectrl,
                             hintText: "Enter Your Name",
+                            valid: (value) {
+                              // Check if empty
+                              if (value == null || value.trim().isEmpty) {
+                                return 'Name cannot be empty';
+                              }
+
+                              return null;
+                            },
                           ),
                           Gap(16.r),
                           AppTextField(
                             textEditingController: birthctrl,
                             hintText: "Enter Your Birth Day (dd/mm/yyyy)",
+                            valid: (value) {
+                              if (value == null || value.trim().isEmpty) {
+                                return 'Birth date cannot be empty';
+                              }
+
+                              // Check pattern dd/mm/yyyy
+                              final regex = RegExp(
+                                r'^(0[1-9]|[12][0-9]|3[01])[\/](0[1-9]|1[0-2])[\/](19|20)\d{2}$',
+                              );
+                              if (!regex.hasMatch(value)) {
+                                return 'Enter a valid date in dd/mm/yyyy format';
+                              }
+
+                              try {
+                                final parts = value.split('/');
+                                final day = int.parse(parts[0]);
+                                final month = int.parse(parts[1]);
+                                final year = int.parse(parts[2]);
+                                final date = DateTime(year, month, day);
+
+                                // Validate logical correctness (e.g., no 31 Feb)
+                                if (date.day != day ||
+                                    date.month != month ||
+                                    date.year != year) {
+                                  return 'Invalid date entered';
+                                }
+                              } catch (e) {
+                                return 'Invalid date entered';
+                              }
+
+                              return null;
+                            },
                           ),
                           Gap(16.r),
                           Spacer(),
                           AppButton(
                             btnText: "Register Voter",
-                            onTap: () => context.read<VoterRegBloc>().add(
-                              VoterRegisterEvent(
-                                nid: nidctrl.text.trim(),
-                                name: namectrl.text.trim(),
-                                birthDate: birthctrl.text,
-                              ),
-                            ),
+                            onTap: () {
+                              if (_formKey.currentState!.validate()) {
+                                context.read<VoterRegBloc>().add(
+                                  VoterRegisterEvent(
+                                    nid: nidctrl.text.trim(),
+                                    name: namectrl.text.trim(),
+                                    birthDate: birthctrl.text,
+                                  ),
+                                );
+                              }
+                            },
                           ),
                         ],
                       ),

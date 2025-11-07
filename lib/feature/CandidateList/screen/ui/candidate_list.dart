@@ -1,3 +1,4 @@
+import 'package:evote_web/app/utils/app_color.dart';
 import 'package:evote_web/feature/CandidateList/bloc/candidate_list_bloc.dart';
 import 'package:evote_web/feature/Home/screen/widget/app_to_bar.dart';
 import 'package:flutter/material.dart';
@@ -60,6 +61,10 @@ class CandidateList extends StatelessWidget {
                               ),
                               trailing: Text(
                                 "Vote Count: ${candidates.voteCount}",
+                                style: TextStyle(
+                                  color: AppColor.buttonColor,
+                                  fontWeight: FontWeight.w900,
+                                ),
                               ),
                             ),
                           );
