@@ -22,8 +22,7 @@ class VoteBloc extends Bloc<VoteEvent, VoteState> {
 
       final response = await http.post(url);
       final data = jsonDecode(response.body);
-      print(url);
-      print(data);
+
       if (response.statusCode == 200) {
         emit(VoteSuccess(message: data['message']));
       } else {
