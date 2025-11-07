@@ -2,6 +2,7 @@ import 'package:evote_web/app/utils/app_routes.dart';
 import 'package:evote_web/feature/AdminLogin/bloc/admin_bloc.dart';
 import 'package:evote_web/feature/AdminLogin/screen/ui/admin_login.dart';
 import 'package:evote_web/feature/AdminLogin/screen/ui/admin_portal.dart';
+import 'package:evote_web/feature/CandidateList/bloc/candidate_list_bloc.dart';
 import 'package:evote_web/feature/CandidateList/screen/ui/candidate_list.dart';
 import 'package:evote_web/feature/CandidateReg/bloc/candidate_reg_bloc.dart';
 import 'package:evote_web/feature/CandidateReg/screen/ui/candidate_reg.dart';
@@ -38,6 +39,7 @@ class _EvoteState extends State<Evote> {
           BlocProvider(create: (context) => VoterRegBloc()),
           BlocProvider(create: (context) => CandidateRegBloc()),
           BlocProvider(create: (context) => VoterListBloc()),
+          BlocProvider(create: (context) => CandidateListBloc()),
         ],
         child: MaterialApp.router(
           debugShowCheckedModeBanner: false,

@@ -1,6 +1,7 @@
 import 'package:evote_web/app/core/app_button.dart';
 import 'package:evote_web/app/utils/app_color.dart';
 import 'package:evote_web/app/utils/app_routes.dart';
+import 'package:evote_web/feature/CandidateList/bloc/candidate_list_bloc.dart';
 import 'package:evote_web/feature/VoterList/bloc/voter_list_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -64,10 +65,26 @@ class AdminPortal extends StatelessWidget {
                       onTap: () => context.push(AppRoutes.candidateRegRoutPath),
                     ),
                     Gap(16.r),
-                    AppButton(
-                      btnText: "Candidate List",
-                      onTap: () =>
-                          context.push(AppRoutes.candidateListRoutePath),
+                    BlocConsumer<CandidateListBloc, CandidateListState>(
+                      listener: (context, state) {
+                        if (state is CandidateListLoaded) {
+                          context.push(AppRoutes.candidateListRoutePath);
+                        }
+                      },
+                      builder: (context, state) {
+                        if (state is CandidateListLoading) {
+                          return const CircularProgressIndicator();
+                        }
+                        if (state is CandidateListError) {
+                          return Text("Error: ${state.errorMessage}");
+                        }
+                        return AppButton(
+                          btnText: "Candidate List",
+                          onTap: () => context.read<CandidateListBloc>().add(
+                            FetchCandidate(),
+                          ),
+                        );
+                      },
                     ),
                     Gap(16.r),
                     BlocConsumer<VoterListBloc, VoterListState>(
@@ -85,7 +102,8 @@ class AdminPortal extends StatelessWidget {
                         }
                         return AppButton(
                           btnText: "Voter List",
-                          onTap: () => context.read<VoterListBloc>().add(FetchVoters()),
+                          onTap: () =>
+                              context.read<VoterListBloc>().add(FetchVoters()),
                         );
                       },
                     ),

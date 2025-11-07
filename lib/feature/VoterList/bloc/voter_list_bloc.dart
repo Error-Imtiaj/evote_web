@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:evote_web/feature/VoterList/model/voter_list_model.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 
@@ -12,6 +13,7 @@ class VoterListBloc extends Bloc<VoterListEvent, VoterListState> {
   VoterListBloc() : super(VoterInitial()) {
     on<FetchVoters>(_onFetchVoters);
   }
+  final baseUri = dotenv.env['BASE_URL'];
 
   Future<void> _onFetchVoters(
     FetchVoters event,
@@ -19,9 +21,7 @@ class VoterListBloc extends Bloc<VoterListEvent, VoterListState> {
   ) async {
     emit(VoterLoading());
     try {
-      final response = await http.get(
-        Uri.parse('http://127.0.0.1:8000/voterlist'),
-      );
+      final response = await http.get(Uri.parse('$baseUri/voterlist'));
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
