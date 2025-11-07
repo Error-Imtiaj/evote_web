@@ -39,9 +39,12 @@ class _VoterRegState extends State<VoterReg> {
           final msg =
               state.successMessage['message'] ??
               'Voter registered successfully ✅';
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(msg)));
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(msg, style: TextStyle(color: AppColor.bgColor)),
+              backgroundColor: AppColor.green,
+            ),
+          );
           namectrl.clear();
           nidctrl.clear();
           birthctrl.clear();
@@ -49,9 +52,9 @@ class _VoterRegState extends State<VoterReg> {
           // context.go(AppRoutes.voterListRoutePath);
         } else if (state is VoterRegisterFailedState) {
           final msg = state.failedMessage['error'] ?? 'Registration failed ❌';
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(msg)));
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(msg), backgroundColor: AppColor.buttonColor),
+          );
         }
       },
       builder: (context, state) {

@@ -10,6 +10,7 @@ import 'package:evote_web/feature/CandidateVerify/bloc/cd_verify_bloc.dart';
 import 'package:evote_web/feature/CandidateVerify/screen/ui/candidate_verify.dart';
 import 'package:evote_web/feature/Home/screen/ui/home_screen.dart';
 import 'package:evote_web/app/utils/app_theme.dart';
+import 'package:evote_web/feature/Vote/bloc/vote_bloc.dart';
 import 'package:evote_web/feature/Vote/screen/ui/vote.dart';
 import 'package:evote_web/feature/VoterList/bloc/voter_list_bloc.dart';
 import 'package:evote_web/feature/VoterList/screen/ui/voter_list.dart';
@@ -44,6 +45,7 @@ class _EvoteState extends State<Evote> {
           BlocProvider(create: (context) => CandidateListBloc()),
           BlocProvider(create: (context) => CdVerifyBloc()),
           BlocProvider(create: (context) => VverifyBloc()),
+          BlocProvider(create: (context) => VoteBloc()),
         ],
         child: MaterialApp.router(
           debugShowCheckedModeBanner: false,
@@ -94,8 +96,11 @@ class _EvoteState extends State<Evote> {
         builder: (context, state) => const AdminPortal(),
       ),
       GoRoute(
-        path: AppRoutes.voteRoutePath,
-        builder: (context, state) => const Vote(),
+        path: '${AppRoutes.voteRoutePath}/:nid',
+        builder: (context, state) {
+          final nid = state.pathParameters['nid'] ?? '';
+          return Vote(nid: nid);
+        },
       ),
     ],
   );

@@ -36,18 +36,21 @@ class _CandidateRegState extends State<CandidateReg> {
           final msg =
               state.successMsg['message'] ??
               'Candidate registered successfully ✅';
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(msg)));
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(msg, style: TextStyle(color: AppColor.bgColor)),
+              backgroundColor: AppColor.green,
+            ),
+          );
           namectrl.clear();
           partyctrl.clear();
           // Navigate to another page if needed
           // context.go(AppRoutes.voterListRoutePath);
         } else if (state is CandidateRegFailed) {
           final msg = state.failedMsg['error'] ?? 'Registration failed ❌';
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(msg)));
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(msg), backgroundColor: AppColor.buttonColor),
+          );
         }
       },
       builder: (context, state) {

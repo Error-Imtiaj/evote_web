@@ -20,22 +20,25 @@ class AdminLogin extends StatefulWidget {
 class _AdminLoginState extends State<AdminLogin> {
   final TextEditingController emailctrl = TextEditingController();
   final TextEditingController passctrl = TextEditingController();
-  final GlobalKey _formKey = GlobalKey();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AdminBloc, AdminState>(
       listener: (context, state) {
         if (state is AdminLoginSuccessState) {
           final msg = state.successMessage['message'] ?? 'Login Successful ✅';
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(msg)));
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(msg, style: TextStyle(color: AppColor.bgColor)),
+              backgroundColor: AppColor.green,
+            ),
+          );
           context.go(AppRoutes.adminPortalRoutePath);
         } else if (state is AdminLoginFailedState) {
           final msg = state.failedMessage['detail'] ?? 'Login Failed ❌';
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(msg)));
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(msg), backgroundColor: AppColor.buttonColor),
+          );
         }
       },
       builder: (context, state) {
@@ -69,23 +72,49 @@ class _AdminLoginState extends State<AdminLogin> {
                     AppTextField(
                       textEditingController: emailctrl,
                       hintText: "Enter Your Email",
+                      valid: (value) {
+                        if (value == null || value.trim().isEmpty) {
+                          return 'Email cannot be empty';
+                        }
+
+                        // Basic email format check
+                        final regex = RegExp(
+                          r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                        );
+                        if (!regex.hasMatch(value.trim())) {
+                          return 'Enter a valid email address';
+                        }
+
+                        return null;
+                      },
                     ),
                     Gap(28.r),
                     AppTextField(
                       textEditingController: passctrl,
                       hintText: "Enter Your Password",
                       obsecureText: true,
+                      valid: (value) {
+                        if (value == null || value.trim().isEmpty) {
+                          return 'Password cannot be empty';
+                        }
+
+                        return null;
+                      },
                     ),
 
                     Spacer(),
                     AppButton(
                       btnText: "Login",
-                      onTap: () => context.read<AdminBloc>().add(
-                        AdminLoginEvent(
-                          email: emailctrl.text.trim(),
-                          pass: passctrl.text.trim(),
-                        ),
-                      ),
+                      onTap: () {
+                        if (_formKey.currentState!.validate()) {
+                          context.read<AdminBloc>().add(
+                            AdminLoginEvent(
+                              email: emailctrl.text.trim(),
+                              pass: passctrl.text.trim(),
+                            ),
+                          );
+                        }
+                      },
                     ),
                     Gap(28.r),
                   ],
