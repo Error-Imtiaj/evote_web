@@ -9,6 +9,7 @@ import 'package:evote_web/feature/CandidateVerify/screen/ui/candidate_verify.dar
 import 'package:evote_web/feature/Home/screen/ui/home_screen.dart';
 import 'package:evote_web/app/utils/app_theme.dart';
 import 'package:evote_web/feature/Vote/screen/ui/vote.dart';
+import 'package:evote_web/feature/VoterList/bloc/voter_list_bloc.dart';
 import 'package:evote_web/feature/VoterList/screen/ui/voter_list.dart';
 import 'package:evote_web/feature/VoterReg/bloc/voter_reg_bloc.dart';
 import 'package:evote_web/feature/VoterReg/screen/ui/voter_reg.dart';
@@ -36,6 +37,7 @@ class _EvoteState extends State<Evote> {
           BlocProvider(create: (context) => AdminBloc()),
           BlocProvider(create: (context) => VoterRegBloc()),
           BlocProvider(create: (context) => CandidateRegBloc()),
+          BlocProvider(create: (context) => VoterListBloc()),
         ],
         child: MaterialApp.router(
           debugShowCheckedModeBanner: false,

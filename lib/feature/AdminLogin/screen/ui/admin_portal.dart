@@ -1,7 +1,9 @@
 import 'package:evote_web/app/core/app_button.dart';
 import 'package:evote_web/app/utils/app_color.dart';
 import 'package:evote_web/app/utils/app_routes.dart';
+import 'package:evote_web/feature/VoterList/bloc/voter_list_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
@@ -68,9 +70,24 @@ class AdminPortal extends StatelessWidget {
                           context.push(AppRoutes.candidateListRoutePath),
                     ),
                     Gap(16.r),
-                    AppButton(
-                      btnText: "Voter List",
-                      onTap: () => context.push(AppRoutes.voterListRoutePath),
+                    BlocConsumer<VoterListBloc, VoterListState>(
+                      listener: (context, state) {
+                        if (state is VoterLoaded) {
+                          context.push(AppRoutes.voterListRoutePath);
+                        }
+                      },
+                      builder: (BuildContext context, VoterListState state) {
+                        if (state is VoterLoading) {
+                          return const CircularProgressIndicator();
+                        }
+                        if (state is VoterError) {
+                          return Text("Error: ${state.message}");
+                        }
+                        return AppButton(
+                          btnText: "Voter List",
+                          onTap: () => context.read<VoterListBloc>().add(FetchVoters()),
+                        );
+                      },
                     ),
                     Gap(16.r),
                     AppButton(
