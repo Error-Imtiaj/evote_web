@@ -66,7 +66,7 @@ class AppDialogue {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Party Name :",
+                      "Candidate Name :",
                       style: GoogleFonts.fjallaOne(
                         color: AppColor.bgColor,
                         decorationColor: Colors.white,
@@ -76,7 +76,7 @@ class AppDialogue {
                     ),
 
                     Text(
-                      "$partyName",
+                      "$cdName",
                       style: GoogleFonts.fjallaOne(
                         color: AppColor.bgColor,
                         decorationColor: Colors.white,
@@ -93,7 +93,7 @@ class AppDialogue {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Candidate Name :",
+                      "Party Name :",
                       style: GoogleFonts.fjallaOne(
                         color: AppColor.bgColor,
                         decorationColor: Colors.white,
@@ -103,7 +103,7 @@ class AppDialogue {
                     ),
 
                     Text(
-                      "$cdName",
+                      "$partyName",
                       style: GoogleFonts.fjallaOne(
                         color: AppColor.bgColor,
                         decorationColor: Colors.white,

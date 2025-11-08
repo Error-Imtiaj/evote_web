@@ -102,12 +102,12 @@ class _CandidateRegState extends State<CandidateReg> {
                           homeTitle(),
                           Gap(48.r),
                           AppTextField(
-                            textEditingController: partyctrl,
-                            hintText: "Enter Your Party Name",
+                            textEditingController: namectrl,
+                            hintText: "Enter Your Name",
                             valid: (value) {
                               // Check if empty
                               if (value == null || value.trim().isEmpty) {
-                                return 'Party Name cannot be empty';
+                                return 'Name cannot be empty';
                               }
 
                               return null;
@@ -115,12 +115,12 @@ class _CandidateRegState extends State<CandidateReg> {
                           ),
                           Gap(16.r),
                           AppTextField(
-                            textEditingController: namectrl,
-                            hintText: "Enter Your Name",
+                            textEditingController: partyctrl,
+                            hintText: "Enter Your Party Name",
                             valid: (value) {
                               // Check if empty
                               if (value == null || value.trim().isEmpty) {
-                                return 'Name cannot be empty';
+                                return 'Party Name cannot be empty';
                               }
 
                               return null;

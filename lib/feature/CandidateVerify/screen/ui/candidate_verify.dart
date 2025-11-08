@@ -78,8 +78,8 @@ class _CandidateVerifyState extends State<CandidateVerify> {
                       AppDialogue.showMyDialog(
                         context,
                         state.candidate.id,
-                        state.candidate.party,
                         state.candidate.name,
+                        state.candidate.party,
                       );
                     }
                     if (state is CdVerifyError) {
